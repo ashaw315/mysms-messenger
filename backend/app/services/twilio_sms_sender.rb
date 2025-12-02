@@ -2,26 +2,23 @@ class TwilioSmsSender
   require 'twilio-ruby'
 
   def initialize(to:, body:)
-    @to = to
+    @to   = to
     @body = body
   end
 
   def call
-     # 🔹 LOCAL MODE:
-    # Do NOT send status_callback when running against Twilio from localhost.
-    # Twilio rejects localhost callback URLs with 21609 and returns HTTP 400,
-    # which causes Twilio::REST::RestError and breaks the request.
-    #
-    # When you DEPLOY and have a real HTTPS URL, uncomment status_callback below.
-
-    message = client.messages.create(
+    params = {
       from: from_number,
       to:   @to,
-      body: @body,
-      # Comment this line out when testing locally:
-      status_callback: status_callback_url
-    )
-    message
+      body: @body
+    }
+
+    if status_callback_url.present?
+      Rails.logger.info "TwilioSmsSender status_callback_url=#{status_callback_url}"
+      params[:status_callback] = status_callback_url
+    end
+
+    client.messages.create(params)
   end
 
   private
@@ -42,11 +39,7 @@ class TwilioSmsSender
     ENV['TWILIO_FROM_NUMBER']
   end
 
-  # Kept for DEPLOYED MODE, not used locally right now.
   def status_callback_url
-    base = ENV['APP_BASE_URL'] || 'http://localhost:3000'
-    base = base.chomp('/')
-
-    "#{base}/api/twilio/status_callback"
+    ENV['TWILIO_STATUS_CALLBACK_URL']
   end
 end
