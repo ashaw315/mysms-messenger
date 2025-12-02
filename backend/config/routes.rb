@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     resources :messages, only: [:index, :create]
-    post 'twilio/status_callback', to: 'twilio_callback#status'
+    post 'twilio/status_callback', to: 'twilio_callbacks#status'
   end
 
   get "up" => "rails/health#show", as: :rails_health_check
