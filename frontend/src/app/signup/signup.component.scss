@@ -1,11 +1,18 @@
-.login-container {
+.signup-container {
   max-width: 320px;
   margin: 4rem auto;
   padding: 2rem;
   border-radius: 8px;
   border: 1px solid #ddd;
   background: #fff;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
+}
+
+h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  text-align: center;
 }
 
 .field {
@@ -14,11 +21,79 @@
   margin-bottom: 1rem;
 }
 
-.link {
-  margin-top: 0.75rem;
-  background: none;
+.field span {
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+input {
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+  transition: border-color 0.15s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: #1976d2;
+}
+
+button {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border-radius: 4px;
   border: none;
+  background: #1976d2;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+button[disabled] {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.link {
+  background: none;
   color: #1976d2;
   text-decoration: underline;
+  margin-top: 1rem;
+  padding: 0.25rem 0;
   cursor: pointer;
+}
+
+/* Single-line generic fallback error */
+.error-banner {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: #fde7eb;
+  border: 1px solid #f7c4cc;
+  border-radius: 4px;
+  color: #b00020;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* Multiple Devise field errors */
+.error-list {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: #fde7eb;
+  border: 1px solid #f7c4cc;
+  border-radius: 4px;
+}
+
+.error-list ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.error-list li {
+  color: #b00020;
+  font-size: 0.9rem;
+  margin: 0.25rem 0;
 }

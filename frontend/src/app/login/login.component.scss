@@ -41,6 +41,7 @@ button {
   color: white;
   font-weight: 600;
   cursor: pointer;
+  margin-bottom: 1rem;
 }
 
 button[disabled] {
@@ -48,8 +49,11 @@ button[disabled] {
   cursor: default;
 }
 
-.error {
-  margin-top: 0.75rem;
+.error-banner {
+  padding: 0.75rem;
+  background: #fde7eb;
+  border: 1px solid #f7c4cc;
+  border-radius: 4px;
   color: #b00020;
   font-size: 0.9rem;
   text-align: center;

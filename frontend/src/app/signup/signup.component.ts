@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../auth.service';
@@ -16,12 +16,18 @@ export class SignupComponent {
   passwordConfirmation: string = '';
   loading: boolean = false;
 
+  // Generic fallback
   error: string | null = null;
+
+  // Detailed messages from backend
   errorMessages: string[] = [];
 
   @Output() switchToLogin = new EventEmitter<void>();
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   onSubmit() {
     if (
@@ -37,17 +43,27 @@ export class SignupComponent {
     this.error = null;
     this.errorMessages = [];
 
+    console.log('onSubmit start, loading:', this.loading);
+
     this.authService
       .register(this.email, this.password, this.passwordConfirmation)
       .subscribe({
         next: () => {
+          console.log('Signup success');
           this.loading = false;
+          this.error = null;
+          this.errorMessages = [];
+          this.cdr.detectChanges(); // force view update
         },
         error: (err) => {
+          console.log('Signup error handler hit, raw err:', err);
+
+          // Make sure loading is turned off on ANY error
           this.loading = false;
           this.error = null;
           this.errorMessages = [];
 
+          // Devise JSON format: { errors: { email: ["is invalid"], password: ["is too short..."] } }
           const errorsObj = err?.error?.errors;
 
           if (errorsObj && typeof errorsObj === 'object') {
@@ -72,7 +88,7 @@ export class SignupComponent {
             );
           }
 
-          // Fallback for other possible error formats
+          // Fallbacks if errorsObj was missing
           if (!this.errorMessages.length) {
             const serverErrors =
               err?.error?.full_messages ||
@@ -87,7 +103,12 @@ export class SignupComponent {
             }
           }
 
-          console.error('Signup error', err);
+          console.log('After error handler: loading =', this.loading);
+          console.log('Parsed errorMessages:', this.errorMessages);
+          console.log('Final error:', this.error);
+
+          // 🔴 Force Angular to refresh the template for this instance
+          this.cdr.detectChanges();
         },
       });
   }
