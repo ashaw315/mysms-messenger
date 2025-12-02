@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, tap } from 'rxjs';
-
-const API_BASE_URL = 'http://localhost:3000';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  private BACKEND_BASE_URL = environment.backendBaseUrl;
+
   private loggedIn$ = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this.loggedIn$.asObservable();
 
@@ -15,48 +16,53 @@ export class AuthService {
 
   login(email: string, password: string) {
     return this.http
-    .post(
-      `${API_BASE_URL}/users/sign_in.json`,
-      {
-        user: { email, password },
-      },
-      {
-        withCredentials: true,
-      }
-    )
-    .pipe(
-      tap(() => {
-        this.loggedIn$.next(true);
-      })
-    );
+      .post(
+        `${this.BACKEND_BASE_URL}/users/sign_in.json`,
+        {
+          user: { email, password },
+        },
+        {
+          withCredentials: true,
+        }
+      )
+      .pipe(
+        tap(() => {
+          this.loggedIn$.next(true);
+        })
+      );
   }
 
   logout() {
     return this.http
-      .delete(`${API_BASE_URL}/users/sign_out.json`, {
-    withCredentials: true,
-  })
-    .pipe(
-      tap(() => {
-        this.loggedIn$.next(false);
+      .delete(`${this.BACKEND_BASE_URL}/users/sign_out.json`, {
+        withCredentials: true,
       })
-    );    
+      .pipe(
+        tap(() => {
+          this.loggedIn$.next(false);
+        })
+      );
   }
 
   register(email: string, password: string, passwordConfirmation: string) {
-    return this.http.post(
-      `${API_BASE_URL}/users.json`,
-      {
-        user: { email, password },
-      },
-      {
-        withCredentials: true,
-      }
-    )
-    .pipe(
-      tap(() => {
-        this.loggedIn$.next(true);
-      })
-    );
+    return this.http
+      .post(
+        `${this.BACKEND_BASE_URL}/users.json`,
+        {
+          user: {
+            email,
+            password,
+            password_confirmation: passwordConfirmation, // include this if Devise validates it
+          },
+        },
+        {
+          withCredentials: true,
+        }
+      )
+      .pipe(
+        tap(() => {
+          this.loggedIn$.next(true);
+        })
+      );
   }
 }
