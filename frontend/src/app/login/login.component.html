@@ -1,0 +1,43 @@
+<div class="login-container">
+  <h2>Login</h2>
+
+  <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+    <label class="field">
+      <span>Email</span>
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="email"
+        required
+        autocomplete="email"
+      />
+    </label>
+
+    <label class="field">
+      <span>Password</span>
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="password"
+        required
+        autocomplete="current-password"
+      />
+    </label>
+
+    <button type="submit" [disabled]="loginForm.invalid || loading">
+      {{ loading ? 'Logging in…' : 'Login' }}
+    </button>
+
+    <p *ngIf="error" class="error">
+      {{ error }}
+    </p>
+
+    <button
+      type="button"
+      class="link"
+      (click)="onSwitchToSignup()"
+    >
+      Don't have an account? Sign up
+    </button>
+  </form>
+</div>

@@ -7,7 +7,7 @@ const API_BASE_URL = 'http://localhost:3000';
 @Injectable({
   providedIn: 'root',
 })
-export class Auth {
+export class AuthService {
   private loggedIn$ = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this.loggedIn$.asObservable();
 
@@ -16,7 +16,7 @@ export class Auth {
   login(email: string, password: string) {
     return this.http
     .post(
-      `${API_BASE_URL}/api/users/sign_in`,
+      `${API_BASE_URL}/users/sign_in.json`,
       {
         user: { email, password },
       },
@@ -33,7 +33,7 @@ export class Auth {
 
   logout() {
     return this.http
-      .delete(`${API_BASE_URL}/api/users/sign_out`, {
+      .delete(`${API_BASE_URL}/users/sign_out.json`, {
     withCredentials: true,
   })
     .pipe(
@@ -41,5 +41,22 @@ export class Auth {
         this.loggedIn$.next(false);
       })
     );    
+  }
+
+  register(email: string, password: string, passwordConfirmation: string) {
+    return this.http.post(
+      `${API_BASE_URL}/users.json`,
+      {
+        user: { email, password },
+      },
+      {
+        withCredentials: true,
+      }
+    )
+    .pipe(
+      tap(() => {
+        this.loggedIn$.next(true);
+      })
+    );
   }
 }

@@ -1,0 +1,62 @@
+<div class="login-container">
+  <h2>Create an account</h2>
+
+  <form (ngSubmit)="onSubmit()" #signupForm="ngForm">
+    <label class="field">
+      <span>Email</span>
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="email"
+        required
+        autocomplete="email"
+      />
+    </label>
+
+    <label class="field">
+      <span>Password</span>
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="password"
+        required
+        autocomplete="new-password"
+      />
+    </label>
+
+    <label class="field">
+      <span>Confirm password</span>
+      <input
+        type="password"
+        name="passwordConfirmation"
+        [(ngModel)]="passwordConfirmation"
+        required
+        autocomplete="new-password"
+      />
+    </label>
+
+    <button type="submit" [disabled]="signupForm.invalid || loading">
+      {{ loading ? 'Creating account…' : 'Sign up' }}
+    </button>
+
+    <div *ngIf="error" class="error-banner">
+        {{ error }}
+    </div>
+
+    <div *ngIf="errorMessages.length" class="error-list">
+        <ul>
+            <li *ngFor="let msg of errorMessages">
+                {{ msg }}
+            </li>
+        </ul>
+    </div>
+
+    <button
+      type="button"
+      class="link"
+      (click)="onSwitchToLogin()"
+    >
+      Already have an account? Log in
+    </button>
+  </form>
+</div>

@@ -1,0 +1,76 @@
+<div class="messages-page">
+  <header class="messages-header">
+    <h2>MySMS Messenger</h2>
+    <button type="button" (click)="onLogout()">Logout</button>
+  </header>
+
+  <section class="send-form">
+    <h3>Send a message</h3>
+
+    <form (ngSubmit)="onSend()" #sendForm="ngForm">
+      <label class="field">
+        <span>Recipient number</span>
+        <input
+          type="tel"
+          name="recipient_number"
+          [(ngModel)]="recipient_number"
+          required
+          placeholder="+1234567890"
+        />
+      </label>
+
+      <label class="field">
+        <span>Message</span>
+        <textarea
+          name="content"
+          [(ngModel)]="content"
+          rows="3"
+          required
+          placeholder="Type your message…"
+        ></textarea>
+      </label>
+
+      <button
+        type="submit"
+        [disabled]="sendForm.invalid || sending"
+      >
+        {{ sending ? 'Sending…' : 'Send' }}
+      </button>
+
+      <p *ngIf="sendError" class="error">
+        {{ sendError }}
+      </p>
+    </form>
+  </section>
+
+  <section class="messages-list">
+    <div class="messages-list-header">
+      <h3>Your messages</h3>
+      <button type="button" (click)="loadMessages()">Refresh</button>
+    </div>
+
+    <p *ngIf="loadingMessages">Loading messages…</p>
+    <p *ngIf="loadError" class="error">{{ loadError }}</p>
+
+    <ul *ngIf="!loadingMessages && messages.length > 0; else emptyState">
+      <li *ngFor="let msg of messages" class="message-card">
+        <div class="meta">
+          <span class="to">To: {{ msg.recipient_number }}</span>
+          <span class="status">
+            Status: {{ msg.status || 'unknown' }}
+          </span>
+        </div>
+        <p class="body">
+          {{ msg.content }}
+        </p>
+        <p *ngIf="msg.error_message" class="error small">
+          Error: {{ msg.error_message }}
+        </p>
+      </li>
+    </ul>
+
+    <ng-template #emptyState>
+      <p>No messages yet. Try sending one above.</p>
+    </ng-template>
+  </section>
+</div>

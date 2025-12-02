@@ -1,0 +1,110 @@
+.messages-page {
+  max-width: 720px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.messages-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.messages-header h2 {
+  margin: 0;
+}
+
+.messages-header button {
+  padding: 0.4rem 0.75rem;
+  border-radius: 4px;
+  border: none;
+  background: #555;
+  color: white;
+  cursor: pointer;
+}
+
+.send-form,
+.messages-list {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: #fafafa;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.field span {
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+input,
+textarea {
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+}
+
+button[type='submit'],
+.messages-list-header button {
+  padding: 0.5rem 0.9rem;
+  border-radius: 4px;
+  border: none;
+  background: #1976d2;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button[disabled] {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.messages-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.messages-list-header h3 {
+  margin: 0;
+}
+
+.message-card {
+  list-style: none;
+  margin-bottom: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: #fff;
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.body {
+  margin: 0;
+}
+
+.error {
+  color: #b00020;
+  margin-top: 0.5rem;
+}
+
+.error.small {
+  font-size: 0.85rem;
+}
