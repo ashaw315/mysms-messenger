@@ -1,5 +1,5 @@
 class Api::TwilioCallbackController < ApplicationController
-    skip_before_action :verify_authenticity_token
+    skip_before_action :verify_authenticity_token, raise: false
 
     def status
         twilio_sid = params[:MessageSid]
