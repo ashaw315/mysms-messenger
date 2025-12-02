@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private BACKEND_BASE_URL = environment.backendBaseUrl;
+  // Make this readonly and clearly typed
+  private readonly BACKEND_BASE_URL: string = environment.backendBaseUrl;
 
-  private loggedIn$ = new BehaviorSubject<boolean>(false);
-  isLoggedIn$ = this.loggedIn$.asObservable();
+  private readonly loggedIn$ = new BehaviorSubject<boolean>(false);
+  readonly isLoggedIn$: Observable<boolean> = this.loggedIn$.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -52,7 +53,7 @@ export class AuthService {
           user: {
             email,
             password,
-            password_confirmation: passwordConfirmation, // include this if Devise validates it
+            password_confirmation: passwordConfirmation,
           },
         },
         {
