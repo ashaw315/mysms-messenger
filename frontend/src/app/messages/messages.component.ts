@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MessagesService } from '../messages.service';
@@ -21,6 +21,8 @@ export class MessagesComponent implements OnInit {
   loadingMessages = false;
   loadError: string | null = null;
 
+  private pollIntervalId: any;
+
   constructor(
     private messagesService: MessagesService,
     private authService: AuthService,
@@ -29,17 +31,29 @@ export class MessagesComponent implements OnInit {
 
   ngOnInit() {
     this.loadMessages();
+
+     this.pollIntervalId = setInterval(() => {
+      this.loadMessages(false); // pass false so we don’t show "Loading..." every time
+    }, 10000);
   }
 
-  loadMessages() {
-    this.loadingMessages = true;
-    this.loadError = null;
+  ngOnDestroy() {
+    if (this.pollIntervalId) {
+      clearInterval(this.pollIntervalId);
+    }
+  }
+
+  loadMessages(showSpinner: boolean = true) {
+    if (showSpinner) {
+      this.loadingMessages = true;
+      this.loadError = null;
+    }
 
     this.messagesService.getMessages().subscribe({
       next: (msgs) => {
         this.messages = msgs;
         this.loadingMessages = false;
-        this.cdr.detectChanges(); // force UI update
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Failed to load messages', err);
