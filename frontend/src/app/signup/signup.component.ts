@@ -16,10 +16,7 @@ export class SignupComponent {
   passwordConfirmation: string = '';
   loading: boolean = false;
 
-  // Generic fallback
   error: string | null = null;
-
-  // Detailed messages from backend
   errorMessages: string[] = [];
 
   @Output() switchToLogin = new EventEmitter<void>();
@@ -53,17 +50,15 @@ export class SignupComponent {
           this.loading = false;
           this.error = null;
           this.errorMessages = [];
-          this.cdr.detectChanges(); // force view update
+          this.cdr.detectChanges();
         },
         error: (err) => {
           console.log('Signup error handler hit, raw err:', err);
 
-          // Make sure loading is turned off on ANY error
           this.loading = false;
           this.error = null;
           this.errorMessages = [];
 
-          // Devise JSON format: { errors: { email: ["is invalid"], password: ["is too short..."] } }
           const errorsObj = err?.error?.errors;
 
           if (errorsObj && typeof errorsObj === 'object') {
@@ -107,7 +102,6 @@ export class SignupComponent {
           console.log('Parsed errorMessages:', this.errorMessages);
           console.log('Final error:', this.error);
 
-          // 🔴 Force Angular to refresh the template for this instance
           this.cdr.detectChanges();
         },
       });
