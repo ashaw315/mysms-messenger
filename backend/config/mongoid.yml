@@ -286,7 +286,6 @@ development:
     # validate the paramters and raise an error if they are invalid.
     # validate_update_replace: false
 
-
 test:
   clients:
     default:
@@ -297,3 +296,13 @@ test:
         read:
           mode: :primary
         max_pool_size: 1
+
+production:
+  clients:
+    default:
+      # For Render / MongoDB Atlas
+      uri: <%= ENV["MONGODB_URI"] %>
+
+  options:
+    # Any Mongoid-wide options you want in production (can be empty)
+    # use_utc: true
