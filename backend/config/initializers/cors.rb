@@ -11,7 +11,8 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
     # for use Angular default port
     # origins "http://localhost:4200"
-    origins "http://localhost:4200"
+    origins 'https://mysms-messenger.netlify.app',
+            'http://localhost:4200'
 
     resource "*",
       headers: :any,
