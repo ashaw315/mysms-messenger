@@ -100,9 +100,15 @@ button[disabled] {
   margin: 0;
 }
 
-.error {
+.error-banner {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: #fde7eb;
+  border: 1px solid #f7c4cc;
+  border-radius: 4px;
   color: #b00020;
-  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  text-align: center;
 }
 
 .error.small {
