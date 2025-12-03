@@ -18,7 +18,7 @@ class TwilioSmsSender
       params[:status_callback] = status_callback_url
     end
 
-    client.messages.create(params)
+    client.messages.create(**params)
   end
 
   private
