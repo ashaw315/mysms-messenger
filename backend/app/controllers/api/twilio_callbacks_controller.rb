@@ -10,7 +10,9 @@ module Api
       error_code     = params[:ErrorCode]
 
       if twilio_sid.present?
-        if (message = Message.find_by(twilio_sid: twilio_sid))
+        message = Message.where(twilio_sid: twilio_sid).first
+
+        if message
           attrs = { status: message_status }
           if error_code.present? || error_message.present?
             attrs[:error_message] = [error_code, error_message].compact.join(': ')
