@@ -6,7 +6,7 @@ A full-stack SMS messaging application that allows users to sign up, log in, sen
 **Frontend:** Angular 21 SPA with cookie-based authentication
 **Deployment:** Backend on Render, Frontend on Netlify
 
-Link: [https://mysms-messenger.netlify.app/]([URL](https://mysms-messenger.netlify.app/))
+Link: [https://mysms-messenger.netlify.app/](https://mysms-messenger.netlify.app/)
 
 ---
 
