@@ -13,8 +13,10 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./messages.component.scss'],
 })
 export class MessagesComponent implements OnInit {
+  readonly DEFAULT_RECIPIENT_NUMBER = '+18777804236';
+
   messages: Message[] = [];
-  recipient_number = '';
+  recipient_number: string = this.DEFAULT_RECIPIENT_NUMBER;
   content = '';
   sending = false;
   sendError: string | null = null;
@@ -102,6 +104,12 @@ export class MessagesComponent implements OnInit {
           this.cdr.detectChanges();
         },
       });
+  }
+
+   clearForm() {
+    this.content = '';
+    this.recipient_number = this.DEFAULT_RECIPIENT_NUMBER;
+    this.sendError = null;
   }
 
   onLogout() {

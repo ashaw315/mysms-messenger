@@ -11,9 +11,15 @@
           <input
             type="tel"
             name="recipient_number"
+            placeholder="+18777804236"
             [(ngModel)]="recipient_number"
             required
           />
+          <div class="helper-text">
+            Demo note: this Twilio trial app is preconfigured to send to
+            <code>+18777804236</code>, Twilio’s virtual phone number. Trial accounts can
+            only send to verified numbers.
+          </div>
         </label>
 
         <label class="field">
@@ -38,7 +44,7 @@
           <button
             type="button"
             class="link-button"
-            (click)="content = ''; recipient_number = ''"
+            (click)="clearForm()"
           >
             Clear
           </button>
