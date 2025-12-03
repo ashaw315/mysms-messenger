@@ -22,11 +22,9 @@ export class App implements OnInit {
   constructor(public auth: AuthService) {}
 
   ngOnInit() {
-    // Reset to login view whenever user logs out
+    // Reset to login view whenever auth state changes
     this.auth.isLoggedIn$.subscribe((isLoggedIn) => {
-      if (!isLoggedIn) {
-        this.showSignup = false;
-      }
+      this.showSignup = false;
     });
   }
 }
