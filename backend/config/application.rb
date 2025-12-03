@@ -42,6 +42,9 @@ module MysmsBackend
     config.api_only = true
     config.middleware.use Rack::Cors
     config.middleware.use ActionDispatch::Cookies
-    config.middleware.use ActionDispatch::Session::CookieStore, key: "_mysms_backend_session"
+    config.middleware.use ActionDispatch::Session::CookieStore,
+      key: "_mysms_backend_session",
+      same_site: :none,
+      secure: !Rails.env.development?
   end
 end
